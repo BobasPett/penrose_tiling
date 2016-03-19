@@ -5,25 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.*;
 import java.awt.geom.*;
 
-/*
-angle += (Math.PI / 180) * 144;
-    x0 = (Math.cos(angle) * length / phi) + x1;
-    y0 = (Math.sin(angle) * length / phi) + y1;
-    draw(x1, y1, x0, y0, g);
 
-
-            //Shape l = new Line2D.Double(5, y, 200, y + delta);
-        //g2.draw(l);
-
-    if k=true --> 36,72,72
-    if k!=true --> 108,36,36
-
-    if lr=true --> l
-    if lr!=true --> r
-
-
-
-*/
 public class tiles extends JPanel {
 
     public static void draw(double x1, double y1,double x2, double y2,Graphics g){
