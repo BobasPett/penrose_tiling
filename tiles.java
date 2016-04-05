@@ -1,20 +1,21 @@
-import javax.swing.*;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.*;
-import java.awt.geom.*;
-
-
-public class tiles extends JPanel {
 
     public static void draw(double x1, double y1,double x2, double y2,Graphics g){
-        Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(2.0f));
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
         Shape l = new Line2D.Double(x1, y1, x2, y2);
-        g2.draw(l);
+        g2d.draw(l);
     }
     public static void circle(double x, double y, double r, Graphics g,String colr) {
+
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(2.0f));
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+
 
         if(colr.equals("red")){
             g2d.setPaint(Color.RED);
@@ -147,72 +148,19 @@ public class tiles extends JPanel {
         }
     }
 
-
-    public static void drawtile(double angle, double length, double x1, double y1,boolean left,boolean tri,int deg, Graphics g){
-        Graphics2D g2 = (Graphics2D) g;
-        double phi=(1+Math.sqrt(5))/2;
-        if(deg>0){
-            if(left && tri){//L1
-                drawtri1(angle,length,x1,y1,left,g);
-
-                /*
-                L1
-                L2
-                 */
-
-
-                drawtile(angle- (Math.PI/180)*108,length/phi,x1+(Math.cos(angle+(Math.PI/180)*72)*length/(phi*phi)),y1+(Math.cos(angle+(Math.PI/180)*72)*length/(phi*phi)),true,true,deg-1,g);//L1
-                drawtile(angle+ (Math.PI/180)*108,length/phi,x1+(Math.cos(angle)*length/phi),y1+(Math.sin(angle)*length/phi),true,false,deg-1,g);//L2
-            }
-            if((!left) && tri){//R1
-                drawtri1(angle,length,x1,y1,left,g);
-
-               /*
-                R1
-                R2
-                 */
-
-                drawtile(angle+(Math.PI/180)*108,length/phi,x1+(Math.cos(angle+(Math.PI/180)*72)*length/(phi*phi)),y1+(Math.sin(angle + (Math.PI / 180) * 72)*length/(phi*phi)),false,true,deg-1,g);//R1
-                drawtile(angle-(Math.PI/180)*108,length/phi,x1+((Math.cos(angle)*length)/phi),y1+((Math.sin(angle)*length)/phi),false,false,deg-1,g);//R2
-            }
-            if(left && (!tri)){//L2
-                drawtri2(angle, length, x1, y1, left, g);
-
-                /*
-                R1
-                R2
-                L2
-                 */
-
-                drawtile(angle- (Math.PI/180)*144,length/phi,x1+(Math.cos(angle+(Math.PI/180)*36)*length),y1+(Math.sin(angle+(Math.PI/180)*36)*length),false,true,deg-1,g);//R1
-                drawtile(angle,length/phi,x1,y1,false,false,deg-1,g);//R2
-                drawtile(angle+ (Math.PI/180)*108,length/phi,x1+(Math.cos(angle)*length*phi),y1+(Math.sin(angle)*length*phi),true,false,deg-1,g);//L2
-            }
-            if((!left) && (!tri)){//R2
-                drawtri2(angle,length,x1,y1,left,g);
-
-                 /*
-                L1
-                L2
-                R2
-                 */
-
-                drawtile(angle +(Math.PI/180)*144,length/phi,x1+(Math.cos(angle)*(length/phi))+(Math.cos(angle+(Math.PI/180)*36)*(length/phi)),y1+(Math.sin(angle)*(length/phi))+(Math.sin(angle+(Math.PI/180)*36)*(length/phi)),true,true,deg-1,g);//L1
-                drawtile(angle, length / phi, x1 + (Math.cos(angle) * length / phi), y1 + (Math.sin(angle) * length / phi), true, false, deg -1,g);//L2
-                drawtile(angle - (Math.PI/180)*144,length/phi,x1+(Math.cos(angle+(Math.PI/180)*36)*length),y1+(Math.sin(angle+(Math.PI/180)*36)*length),false,false,deg-1,g);//R2
-            }
-        }
-    }
-
     public static void main(String[] args) {
-        JFrame frame = new JFrame("s");
-        tiles a = new tiles();
+        JFrame frame = new JFrame("Frame");
+        Main a = new Main();
         frame.add(a);
         frame.setSize(1200, 1200);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(Color.white);
     }
+
+
+
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -225,11 +173,9 @@ public class tiles extends JPanel {
         double y1=(h/2);
 
 
-        drawtile(0, length, x1+100, y1, true, true, 2, g);
 
 
 
 
     }
-
-}
+    }
