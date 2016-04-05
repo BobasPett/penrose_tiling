@@ -1,3 +1,13 @@
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.geom.*;
+
+
+
+public class Main extends JPanel {
 
     public static void draw(double x1, double y1,double x2, double y2,Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -178,4 +188,4 @@
 
 
     }
-    }
+}
