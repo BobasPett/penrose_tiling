@@ -4,14 +4,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.*;
+import javax.imageio.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 
-public class Main extends JPanel {
 
-   
+public class Ptiling extends JPanel {
 
-    public static int size=4000;
+
+    public static int size=4000;//PNG legnth
+    
     public static  ArrayList<ArrayList<Double>> makespace(ArrayList<ArrayList<Double>> a,int num){
         if(a.size()>0) {
             System.out.println("makespace(): list size > 0");
@@ -27,14 +32,8 @@ public class Main extends JPanel {
         }
         return a;
     }
-    public static void draw(double x1, double y1,double x2, double y2,Graphics2D g2d){
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2d.setStroke(new BasicStroke(12.0f));
-        Shape l = new Line2D.Double(x1, y1, x2, y2);
-        g2d.draw(l);
-    }
-    public static void draw1(double x1, double y1,double x2, double y2,String color,Graphics2D g2d){
+
+    public static void draw(double x1, double y1,double x2, double y2,String color,Graphics2D g2d){
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         if(color.equals("red")){
@@ -106,13 +105,14 @@ public class Main extends JPanel {
             g2d.setPaint(Color.black);
         }
 
-        draw(points.get(0).get(0),points.get(0).get(1),points.get(1).get(0),points.get(1).get(1),g2d);
-        draw(points.get(0).get(0),points.get(0).get(1),points.get(2).get(0),points.get(2).get(1),g2d);
-        draw(points.get(1).get(0),points.get(1).get(1),points.get(2).get(0),points.get(2).get(1),g2d);
-        //g2d.fillPolygon(x,y,3);
+        draw(points.get(0).get(0),points.get(0).get(1),points.get(1).get(0),points.get(1).get(1),color,g2d);
+        draw(points.get(0).get(0),points.get(0).get(1),points.get(2).get(0),points.get(2).get(1),color,g2d);
+        draw(points.get(1).get(0),points.get(1).get(1),points.get(2).get(0),points.get(2).get(1),color,g2d);
+        g2d.fillPolygon(x,y,3);
     }
 
     /**
+     * thin
      * @param angle draw triangle at this angle
      * @param length length of short side
      * @param x1
@@ -164,6 +164,7 @@ public class Main extends JPanel {
     }
 
     /**
+     * fat
      * @param angle draw triangle at this angle
      * @param length length of short side
      * @param x1
@@ -213,6 +214,7 @@ public class Main extends JPanel {
     }
 
     /**
+     * rotate
      * @param a rotate points by
      * @param x1 rotate at this xcord
      * @param y1 rotate at this ycord
@@ -251,7 +253,6 @@ public class Main extends JPanel {
             result.add(temp);
         }
 
-
         //problem w/ func call changing vars outside func copy stuff from param to new list
         ArrayList<ArrayList<Double>> pointss=new ArrayList<ArrayList<Double>>();
         for(ArrayList<Double> i: points){
@@ -288,6 +289,7 @@ public class Main extends JPanel {
     }
 
     /**
+     * subdivide
      * @param points list of 3 points for drawing a triangle
      * @param left consider the triangle being drawn where the unequal side
      *             wasnt drawn at an angle, is the subdivision on left or right
@@ -399,7 +401,7 @@ public class Main extends JPanel {
 
 
             if(deg==1){
-                draw1(points.get(a).get(0),points.get(a).get(1),points.get(b).get(0),points.get(b).get(1),"white",g2d);
+                draw(points.get(a).get(0),points.get(a).get(1),points.get(b).get(0),points.get(b).get(1),"white",g2d);
             }
 
             //rotate 180 deg if upside down
@@ -550,10 +552,7 @@ public class Main extends JPanel {
             }
         }
     }
-    public static double[] centroid(double x1,double y1,double x2,double y2,double x3,double y3){
-        double[] result = {(x1+x2+x3)/3,(y1+y2+y3)/3};
-        return result;
-    }
+    
 
 
 
@@ -604,4 +603,5 @@ public class Main extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(Color.white);
     }
+
 }
